@@ -1,0 +1,14 @@
+
+	Bearing
+[1]	City Name
+[2]	Region
+[3]	Country
+[4]	Direction
+[5]	Nautical Miles
+[6]	Internet Code
+[7]	Kilometres
+[8]	Latitude
+[9]	Geobytes Location Code	The Geobytes Location Code of the nearby city
+[10]Longitude	The Longitude of the nearby city
+[11]Miles	The distance in Miles
+[12]Region or State	The name of the region or state of the nearby city
