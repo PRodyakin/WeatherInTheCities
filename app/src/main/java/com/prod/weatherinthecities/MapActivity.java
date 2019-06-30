@@ -69,13 +69,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
-        map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-
-            @Override
-            public void onCameraChange(CameraPosition camera) {
-                Log.d(TAG, "onCameraChange: " + camera.target.latitude + "," + camera.target.longitude);
-            }
-        });
+//        map.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+//
+//            @Override
+//            public void onCameraChange(CameraPosition camera) {
+//                Log.d(TAG, "onCameraChange: " + camera.target.latitude + "," + camera.target.longitude);
+//            }
+//        });
     }
 
 

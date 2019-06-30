@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 public class CitiesSearcherAPI {
 
     public class City{
-
+        private List<City> cityList;
 
 
     }
