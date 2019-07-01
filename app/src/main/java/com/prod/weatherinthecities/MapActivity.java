@@ -32,16 +32,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        if (map == null) {
-            finish();
-            return;
-        }
-        userMarker = new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Hello world");
 
-
-        init();
     }
 
     private void init() {
@@ -91,6 +82,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
             map = googleMap;
+        if (map == null) {
+            finish();
+            return;
+        }
+        userMarker = new MarkerOptions()
+                .position(new LatLng(0, 0))
+                .title("Hello world");
 
+
+        init();
     }
 }
