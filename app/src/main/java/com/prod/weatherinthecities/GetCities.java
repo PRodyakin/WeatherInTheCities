@@ -1,5 +1,8 @@
 package com.prod.weatherinthecities;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,9 +21,13 @@ public class GetCities {
     ////?city_coming&latitude=XXX&longitude=YYY&json&api_key=API_KEY_из_профиля
 
     private GetCities(){
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
 

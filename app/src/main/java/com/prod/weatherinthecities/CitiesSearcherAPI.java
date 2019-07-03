@@ -2,21 +2,13 @@ package com.prod.weatherinthecities;
 
 import java.util.List;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
-public class CitiesSearcherAPI {
+public interface CitiesSearcherAPI {
 
-    public class City{
-        private List<City> cityList;
-
-
-    }
-
-
-    public interface ServerApi {
-
-        @GET("GetNearbyCities")
-        List<City> getCities();
-
-    }
+    @GET("changes/")
+    Call<List<Change>> loadChanges(@Query("q") String status);
 }
+
