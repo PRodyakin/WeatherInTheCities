@@ -4,6 +4,13 @@ import androidx.core.util.Consumer;
 
 import org.junit.Test;
 
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+
+import static android.os.Debug.waitForDebugger;
 import static org.junit.Assert.*;
 
 /**
@@ -14,23 +21,53 @@ import static org.junit.Assert.*;
 
 public class ExampleUnitTest {
 
+    public class Nums{
+        public int number;
+    }
+
+    private static final CountDownLatch latch = new CountDownLatch(1);
+    String sd;
     @Test
-    public void changeTest(){
+    public void changeTest() throws InterruptedException, IOException {
 
 
-        Change changeRetr = Change.getInstance();
+
+
+        final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+
+        Change changeRetr = Change.getInstance(client);
         assertNotNull(changeRetr);
-        changeRetr.getCity(new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                System.out.println(s);
-            }
-        });
+
+
+            changeRetr.getNearbyCitiesByLatitude (new Consumer<String>() {
+                @Override
+                public void accept(String s) {
+
+                    sd = s;
+                    System.out.println(s);
+                    latch.countDown();
+                }
+            },"40.74879","-73.9845",20);
+        ;
+
+        //latch.countDown();
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
+public void debbuging(){
 
 
 
+}
 
 }

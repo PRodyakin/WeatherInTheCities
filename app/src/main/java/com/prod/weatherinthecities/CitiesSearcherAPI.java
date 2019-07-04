@@ -12,6 +12,9 @@ public interface CitiesSearcherAPI {
 
     //@GET("GetNearbyCities?callback=?&radius={radius}&locationcode={locationcode}")
     @GET("GetNearbyCities")
-    Call<Change.ArrArr> getNearbyCities(@Query("radius") int radius, @Query("locationcode") String locationcode);
+    Call<List<List<String>>> getNearbyCitiesBylocationcode(@Query("radius") int radius, @Query("locationcode") String locationcode, @Query("limit") int limit);
+
+    @GET("GetNearbyCities")
+    Call<List<List<String>>> getNearbyCitiesByLatitude(@Query("radius") int radius, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("limit") int limit);
 }
 
