@@ -1,5 +1,7 @@
 package com.prod.weatherinthecities;
 
+import androidx.core.util.Consumer;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,9 +11,26 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+
 public class ExampleUnitTest {
+
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void changeTest(){
+
+
+        Change changeRetr = Change.getInstance();
+        assertNotNull(changeRetr);
+        changeRetr.getCity(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                System.out.println(s);
+            }
+        });
     }
+
+
+
+
+
+
 }
