@@ -33,6 +33,22 @@ public class Change {
     private Retrofit mRetrofit;
 
     ////?city_coming&latitude=XXX&longitude=YYY&json&api_key=API_KEY_из_профиля
+    public static Change getInstance(OkHttpClient client) {
+
+        if (mInstance == null) {
+            mInstance = new Change(client);
+        }
+        return mInstance;
+    }
+
+    public static Change getInstance() {
+
+        if (mInstance == null) {
+            mInstance = new Change();
+        }
+        return mInstance;
+    }
+
 
     public Change() {
         mRetrofit = new Retrofit.Builder()
@@ -122,13 +138,7 @@ public class Change {
     }
 
 
-    public static Change getInstance(OkHttpClient client) {
 
-        if (mInstance == null) {
-            mInstance = new Change(client);
-        }
-        return mInstance;
-    }
 
 
 }
