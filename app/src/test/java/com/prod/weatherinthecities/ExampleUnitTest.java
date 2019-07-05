@@ -21,16 +21,15 @@ import static org.junit.Assert.*;
 
 public class ExampleUnitTest {
 
-    public class Nums{
+    public class Nums {
         public int number;
     }
 
     private static final CountDownLatch latch = new CountDownLatch(1);
     String sd;
+
     @Test
     public void changeTest() throws InterruptedException, IOException {
-
-
 
 
         final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -43,15 +42,15 @@ public class ExampleUnitTest {
         assertNotNull(changeRetr);
 
 
-            changeRetr.getNearbyCitiesByLatitude (new Consumer<String>() {
-                @Override
-                public void accept(String s) {
+        changeRetr.getNearbyCitiesByLatitude(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
 
-                    sd = s;
-                    System.out.println(s);
-                    latch.countDown();
-                }
-            },"40.74879","-73.9845",20);
+                sd = s;
+                System.out.println(s);
+                latch.countDown();
+            }
+        }, "40.74879", "-73.9845", 20);
         ;
 
         //latch.countDown();
@@ -64,10 +63,43 @@ public class ExampleUnitTest {
     }
 
 
-public void debbuging(){
+    @Test
+    public void weatherTest(){
+        final HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+
+        Weather gettingWeather = Weather.getInstance(client);
+        assertNotNull(gettingWeather);
 
 
+        gettingWeather.getWeather(new Consumer<Weather.WeatherPOJO.WeatherResult>() {
+            @Override
+            public void accept(Weather.WeatherPOJO.WeatherResult weatherPOJO) {
+                System.out.println(weatherPOJO);
+                latch.countDown();
+            }
 
-}
+
+        }, "40.74879", "-73.9845", "ru", "minutely,hourly,daily", "si");
+        ;
+
+        //latch.countDown();
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void debbuging() {
+
+
+    }
 
 }
