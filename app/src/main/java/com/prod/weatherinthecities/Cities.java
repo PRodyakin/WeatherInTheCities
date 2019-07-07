@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 
@@ -30,7 +31,7 @@ public class Cities {
 
     private static Cities mInstance;
     private static final String BASE_URL = "http://getnearbycities.geobytes.com/";
-    private Retrofit mRetrofit;
+    private static Retrofit mRetrofit;
 
     ////?city_coming&latitude=XXX&longitude=YYY&json&api_key=API_KEY_из_профиля
 
@@ -53,40 +54,30 @@ public class Cities {
 
     }
 
-    public class CitiesPOJO{
-
-        public List<CityPOJO> cities;
-
-        public class CityPOJO{
-            public Double Bearing;
-            public Double City_Name;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-        }
 
 
-    }
 
-    public void getNearbyCitiesByLatitude(final Consumer<String> callback, String longitude, String latitude, int limit){
+    public void getNearbyCitiesByLatitude(final Consumer<List<City>> callback, String longitude, String latitude, int limit){
 
-        Call<List<List<String>>> call = mRetrofit.create(CitiesSearcherAPI.class).getNearbyCitiesByLatitude(200, longitude, latitude,limit);
+
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Call<List<List<String>>> call = mRetrofit.create(CitiesSearcherAPI.class).getNearbyCitiesByLatitude(10000, latitude, longitude,limit);
 
         getCityListString(call,callback);
     }
 
-    public void getNearbyCitiesBylocationcode(final Consumer<String> callback, String locationcode, int limit){
+    public void getNearbyCitiesBylocationcode(final Consumer<List<City>> callback, String locationcode, int limit){
 
-        Call<List<List<String>>> call = mRetrofit.create(CitiesSearcherAPI.class).getNearbyCitiesBylocationcode(200, locationcode,limit);
+        Call<List<List<String>>> call = mRetrofit.create(CitiesSearcherAPI.class).getNearbyCitiesBylocationcode(10000, locationcode,limit);
 
         getCityListString(call,callback);
     }
 
-    private void getCityListString(Call<List<List<String>>> call, final Consumer<String> callback) {
+    private  void getCityListString(Call<List<List<String>>> call, final Consumer<List<City>> callback) {
 
         //List<List<List<String>>>
         //Call<List<List<String>>> call = mRetrofit.create(CitiesSearcherAPI.class).getNearbyCitiesBylocationcode(100, "69.16.219.25");
@@ -100,13 +91,22 @@ public class Cities {
                 if (response.body() != null) {
                     List<List<String>> wResponse2 = response.body();
                     //responseText = ;
-                    callback.accept(wResponse2.toString());
+                    List<City> cities = new ArrayList<City>();
+                    for (int i = 0; i < response.body().size(); i++) {
+                        City city = new City(
+                                wResponse2.get(i).get(1),
+                                wResponse2.get(i).get(8),
+                                wResponse2.get(i).get(10));
+                        cities.add(city);
+                    }
+
+                    callback.accept(cities);
                 }
             }
 
             @Override
             public void onFailure(Call<List<List<String>>> call, Throwable t) {
-                callback.accept( t.getMessage());
+                callback.accept( null);
 
             }
         });
@@ -117,6 +117,13 @@ public class Cities {
 
         if (mInstance == null) {
             mInstance = new Cities(client);
+        }
+        return mInstance;
+    }
+    public static Cities getInstance() {
+
+        if (mInstance == null) {
+            mInstance = new Cities();
         }
         return mInstance;
     }

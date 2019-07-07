@@ -11,16 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></fragment>
+
+
+        <FrameLayout
+            android:id="@+id/mapList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -31,16 +29,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/map">
+            app:layout_constraintTop_toBottomOf="@+id/mapList">
 
             <Button
-                
+
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:layout_weight="1"
-                android:text="Button" />
+                android:onClick="onClickMapBtn"
+                android:text="@string/MapBtn" />
 
             <Button
                 android:id="@+id/btnTest"
@@ -48,8 +47,8 @@
                 android:layout_height="wrap_content"
 
                 android:layout_weight="1"
-                android:onClick="onClickMapBtn"
-                android:text="@string/MapBtn" />
+                android:onClick="onClickListBtn"
+                android:text="@string/ListBtn" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

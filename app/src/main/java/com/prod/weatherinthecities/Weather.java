@@ -34,6 +34,13 @@ public class Weather {
                 .client(client)
                 .build();
     }
+    public Weather() {
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+
+                .build();
+    }
 
     private interface WeatherApi {
         @GET("forecast/{key}/{lon},{lat}")
@@ -196,6 +203,13 @@ public class Weather {
 
         if (mInstance == null) {
             mInstance = new Weather(client);
+        }
+        return mInstance;
+    }
+    public static Weather getInstance() {
+
+        if (mInstance == null) {
+            mInstance = new Weather();
         }
         return mInstance;
     }

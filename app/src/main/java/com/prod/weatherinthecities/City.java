@@ -2,30 +2,58 @@ package com.prod.weatherinthecities;
 
 import androidx.core.util.Consumer;
 
+import java.util.List;
+
 public class City {
 
     public String lat;
     public String lon;
     public String name;
-    public Weather weatherInfo;
-    public Cities cityInfo;
+    public int limit;
+    public Weather.WeatherPOJO.WeatherResult weatherInfo;
+    public List<City> nearestCities;
 
-    public City(String lat, String lon) {
-        this.lat = lat;
+    public City(String name, String lat, String  lon) {
+        this.name = name;
         this.lon = lon;
+        this.lat = lat;
+
+        this.limit = 20;
     }
 
-    public void loadCities(){
-        Change changeRetr = Change.getInstance();
+    public void setnearestCities(List<City> nearestCities){
+        this.nearestCities = nearestCities;
 
+    }
 
+    public static void loadCities(final City city, final Consumer<City> consumerCity){
 
-        changeRetr.getNearbyCitiesByLatitude(new Consumer<String>() {
+        Cities citiesService = new Cities();
+
+        citiesService.getNearbyCitiesByLatitude(new Consumer<List<City>>() {
             @Override
-            public void accept(String s) {
-                System.out.println(s);
+            public void accept(List<City> s) {
+                city.nearestCities = s;
+                consumerCity.accept(city);
+            }
+        }, city.lat, city.lon, city.limit );
+
+    }
+
+    public static void loadWeather(final City city, final Consumer<City> consumerCity){
+
+        Weather weatherService = Weather.getInstance();
+
+        weatherService.getWeather(new Consumer<Weather.WeatherPOJO.WeatherResult>() {
+            @Override
+            public void accept(Weather.WeatherPOJO.WeatherResult weatherPOJO) {
+                city.weatherInfo = weatherPOJO;
+                consumerCity.accept(city);
 
             }
-        }, "40.74879", "-73.9845", 20);
+
+        },city.lat,  city.lon, "ru", "minutely,hourly,daily", "si");
     }
+
+
 }
