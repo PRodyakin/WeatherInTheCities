@@ -53,24 +53,7 @@ public class Cities {
 
     }
 
-    public class CitiesPOJO{
 
-        public List<CityPOJO> cities;
-
-        public class CityPOJO{
-            public Double Bearing;
-            public Double City_Name;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-            public Double;
-        }
-
-
-    }
 
     public void getNearbyCitiesByLatitude(final Consumer<String> callback, String longitude, String latitude, int limit){
 
@@ -117,6 +100,13 @@ public class Cities {
 
         if (mInstance == null) {
             mInstance = new Cities(client);
+        }
+        return mInstance;
+    }
+    public static Cities getInstance() {
+
+        if (mInstance == null) {
+            mInstance = new Cities();
         }
         return mInstance;
     }

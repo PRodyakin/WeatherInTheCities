@@ -16,11 +16,11 @@ public class City {
     }
 
     public void loadCities(){
-        Change changeRetr = Change.getInstance();
+        Cities nearesCities = Cities.getInstance();
 
 
 
-        changeRetr.getNearbyCitiesByLatitude(new Consumer<String>() {
+        nearesCities.getNearbyCitiesByLatitude(new Consumer<String>() {
             @Override
             public void accept(String s) {
                 System.out.println(s);
