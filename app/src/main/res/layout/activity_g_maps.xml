@@ -11,10 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/map_fragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,16 +32,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/map">
+            app:layout_constraintTop_toBottomOf="@+id/map_fragment">
 
             <Button
-                
+
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
                 android:layout_weight="1"
-                android:text="Button" />
+
+                android:text="@string/MapBtn" />
 
             <Button
                 android:id="@+id/btnTest"
@@ -48,8 +50,8 @@
                 android:layout_height="wrap_content"
 
                 android:layout_weight="1"
-                android:onClick="onClickMapBtn"
-                android:text="@string/MapBtn" />
+
+                android:text="@string/ListBtn" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
