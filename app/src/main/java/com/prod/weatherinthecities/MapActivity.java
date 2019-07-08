@@ -1,38 +1,34 @@
 package com.prod.weatherinthecities;
 
+
 import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import androidx.core.util.Consumer;
-
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
+
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
     public City city;
     SupportMapFragment mapFragment;
     GoogleMap map;
     final String TAG = "myLogs";
-
-    OnMapReadyCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +37,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_g_maps);
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map_fragment);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
     }
@@ -63,7 +60,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 map.addMarker(userMarker);
                 map.animateCamera(cameraUpdate);
 
-                Cities cities = new Cities();
+
                 city = new City("Default", Double.toString(userMarker.getPosition().longitude), Double.toString(userMarker.getPosition().latitude));
 
                 City.loadCities(city,new Consumer<City>() {
@@ -114,15 +111,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    public void onClickTest(View view) {
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-    }
-
-    public void onClickPosition(View view) {
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(new LatLng(
-                -27, 133));
-        map.animateCamera(cameraUpdate);
-    }
 
 
 
@@ -169,7 +157,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                                                          marker.showInfoWindow();
                                                      }
 
-                                                     ;
+
 
 
                                                  }, Double.toString(marker.getPosition().latitude), Double.toString(marker.getPosition().longitude), "ru", "minutely,hourly,daily", "si");
