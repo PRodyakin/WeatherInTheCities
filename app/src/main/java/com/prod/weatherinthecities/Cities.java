@@ -88,7 +88,7 @@ public class Cities {
             public void onResponse(Call<List<List<String>>> call, Response<List<List<String>>> response) {
 
 
-                if (response.body() != null) {
+                if (response.body() != null && response.body().size() > 0) {
                     List<List<String>> wResponse2 = response.body();
                     //responseText = ;
                     List<City> cities = new ArrayList<City>();
